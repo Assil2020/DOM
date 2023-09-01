@@ -1,0 +1,85 @@
+*{
+    padding: 0;
+    margin: 0
+}
+
+body{
+    height: 100%;
+    position: fixed;
+    background-color:#E2DCE8
+}
+
+.container h1{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.aspire-card-img{
+    width: 50%;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+
+.information-card {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: -295px 0px 0px 400px;
+}
+
+.input-div {
+    padding: 10px;
+    margin: 5px 0; 
+    border-radius: 5px;
+    border: none;
+}
+
+.result-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.result-padding{
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+}
+
+.amount-enter-div{
+    width: 20%;
+    padding: 10px;
+    margin: -405px 0px 0px 860px;
+}
+
+.buttonGet{
+    width: 10%;
+    background-color: #1FD167;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+    margin: -120px 80px 0px 930px;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.listElementContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 150px 0px 20px -700px;
+  }
+
+  .message {
+    margin: 5px 0;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+  }

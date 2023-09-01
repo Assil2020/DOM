@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav-container">
+        <div class="left-nav">
+          <div class="menu-btn-container">
+            <button class="menu-btn">☰</button>
+          </div>
+          <div class="logo">
+            <img
+              src="https://media.ldlc.com/cms/2023-07/logo-g3ans.gif"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="bar-search">
+          <input class="search-bar" type="text" placeholder="Search" />
+        </div>
+        <div class="right-nav">
+            <button class="shopping-cart-btn"><i class="fa fa-shopping-cart"></i></button>
+            <!-- <div class="cart-container">
+              <div class="cart-items cart-items-container hidden"></div>
+            </div> -->
+          <div class="loging-container">
+            <form action="login">
+              <button class="login-btn">Log In</button>
+              <button class="register-btn">Sing Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="add-cart-container"></div> -->
+      <div class="product-container">
+        <div class="macbook-pro product">
+          <h1 class="product-name">MacBook Pro</h1>
+          <img
+            class="product-image"
+            src="https://media.ldlc.com/shop/apple/IMAGES/MAC/Macbook_Pro.jpg"
+            alt=""
+          />
+          <h3 class="product-price">200 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i>
+          </button>
+        </div>
+        <div class="mac-mini product">
+          <h1 class="product-name">Mac mini</h1>
+          <img
+            class="product-image"
+            src="https://media.ldlc.com/shop/apple/IMAGES/MAC/Mac_mini.jpg"
+            alt=""
+          />
+          <h3 class="product-price">150 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i></button>
+        </div>
+        <div class="imac-24 product">
+          <h1 class="product-name">iMac 24”</h1>
+          <img
+            class="product-image"
+            src="https://media.ldlc.com/shop/apple/IMAGES/MAC/iMac_24.jpg"
+            alt=""
+          />
+          <h3 class="product-price">300 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i></button>
+        </div>
+        <div class="mac-studio product">
+          <h1 class="product-name">Mac Studio</h1>
+          <img
+            class="product-image"
+            src="https://media.ldlc.com/shop/apple/IMAGES/MAC/Mac_studio.jpg"
+            alt=""
+          />
+          <h3 class="product-price">350 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i></button>
+        </div>
+        <div class="macbook-pro product">
+          <h1 class="product-name">Mac Pro</h1>
+          <img
+            class="product-image"
+            src="https://media.ldlc.com/shop/apple/IMAGES/MAC/Mac_pro.jpg"
+            alt=""
+          />
+          <h3 class="product-price">400 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i></button>
+        </div>
+        <div class="studio-display product">
+          <h1 class="product-name">Studio Display</h1>
+          <img
+            class="product-image"
+            src="https://media.ldlc.com/shop/apple/IMAGES/MAC/Studio_display.jpg"
+            alt=""
+          />
+          <h3 class="product-price">270 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i></button>
+        </div>
+        <div class="macbook-pro product">
+          <h1 class="product-name">iMac</h1>
+          <img
+            class="product-image"
+            src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/preunidays-imac-product-202306?wid=452&hei=356&fmt=png-alpha&.v=1684532781196"
+            alt=""
+          />
+          <h3 class="product-price">180 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i></button>
+        </div>
+        <div class="macbook-air product">
+          <h1 class="product-name">Macbook Air</h1>
+          <img
+            class="product-image"
+            src="https://media.ldlc.com/shop/apple/IMAGES/MAC/Macbook_Air.jpg"
+            alt=""
+          />
+          <h3 class="product-price">240 000<span> DZD</span></h3>
+          <button class="add-cart-btn" onclick="addToCart()">ADD TO CART<i class="fa fa-shopping-cart"></i></button>
+        </div>
+      </div>
+      <div id="modal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close-btn" id="closeBtn">&times;</span>
+          <div class="product-details">
+            <img id="modalProductImage" src="" alt="">
+            <h3 id="modalProductName"></h3>
+            <p id="modalProductPrice"></p>
+          </div>
+          <span id="chooseQuantityLabel">Choose Quantity</span>
+          <input type="number" id="quantityInput" min="1" value="1">
+          <button id="addToCartModal">Confirm</button>
+        </div>
+      </div>
+      <div class="cart-container">
+        <button class="close-cart-btn" id="closeCartBtn">&times;</button>
+        <div id="cartEmptyMessage" class="hidden">Votre panier est vide.</div>
+        <p id="cartTotal">Total: 0 DZD</p>
+        <div class="cart-items cart-items-container hidden"></div>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    // Déclaration du tableau cart en dehors de la boucle
+    const cart = [];
+
+    const modal = document.getElementById("modal");
+    const closeBtn = document.getElementById("closeBtn");
+    const addToCartModalBtn = document.getElementById("addToCartModal");
+    const quantityInput = document.getElementById("quantityInput");
+    const modalProductImage = document.getElementById("modalProductImage");
+    const modalProductName = document.getElementById("modalProductName");
+    const modalProductPrice = document.getElementById("modalProductPrice");
+    const modalContent = document.querySelector(".modal-content");
+    const chooseQuantityLabel = document.getElementById("chooseQuantityLabel");
+    const cartItemsContainer = document.querySelector(".cart-items");
+    const cartContainer = document.querySelector(".cart-container");
+    const closeCartBtn = document.getElementById("closeCartBtn");
+    const shoppingCartBtn = document.querySelector(".shopping-cart-btn");
+    const addCartButtons = document.querySelectorAll(".add-cart-btn");
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    closeCartBtn.addEventListener("click", () => {
+        cartContainer.style.display = "none";
+    });
+
+    shoppingCartBtn.addEventListener("click", () => {
+        cartContainer.style.display = "flex";
+        cartContainer.style.justifyContent = "center";
+        cartContainer.style.backgroundColor = "#0096C9";
+        cartContainer.style.margin = "-500px 400px 500px 500px";
+        cartContainer.style.padding = "20px 0px 0px 0px";
+        cartItemsContainer.classList.toggle("hidden");
+    });
+
+    addCartButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const productName = button.parentElement.querySelector(".product-name").textContent;
+        const productPrice = button.parentElement.querySelector(".product-price").textContent;
+        const productImage = button.parentElement.querySelector(".product-image").src;
+
+        modalProductImage.src = productImage;
+        modalProductName.textContent = productName;
+        modalProductPrice.textContent = productPrice;
+
+        modal.style.display = "block";
+        modal.style.margin = "-1000px 0px 30px 300px";
+        modalContent.style.backgroundColor = "#0096C9";
+        modal.style.padding = "300px";
+        modalContent.style.display = "flex";
+        modalContent.style.flexDirection = "column";
+        modalContent.style.alignItems = "center";
+        modalContent.style.padding = "30px";
+
+        
+
+        addToCartModalBtn.addEventListener("click", () => {
+            const quantity = quantityInput.value;
+
+            // Vérifiez si l'article est déjà dans le panier
+            const existingCartItem = cart.find((item) => item.productName === productName);
+
+            if (existingCartItem) {
+                // Si l'article existe, mettez à jour la quantité
+                existingCartItem.quantity = parseInt(existingCartItem.quantity) + parseInt(quantity);
+            } else {
+                // Sinon, ajoutez une nouvelle entrée au panier
+                const cartItemData = {
+                    productName: productName,
+                    productPrice: productPrice,
+                    productImage: productImage,
+                    quantity: quantity,
+                };
+                cart.push(cartItemData);
+            }
+
+            // Mettez à jour l'affichage du panier
+            updateCartDisplay();
+
+            modal.style.display = "none";
+        });
+    });
+});
+
+function updateCartDisplay() {
+    cartItemsContainer.innerHTML = ""; // Effacez le contenu actuel du panier
+
+    let total = 0; // Initialisez la variable du total à zéro
+
+    cart.forEach((cartItemData) => {
+        const cartItem = document.createElement("div");
+        cartItem.classList.add("cart-item");
+        cartItem.innerHTML = `
+            <img src="${cartItemData.productImage}" alt="${cartItemData.productName}" />
+            <div class="cart-item-details">
+                <h3>${cartItemData.productName}</h3>
+                <p>${cartItemData.productPrice}</p>
+                <p>Quantity: ${cartItemData.quantity}</p>
+            </div>
+        `;
+
+        // Calculez le sous-total pour chaque article du panier
+        const subTotal = parseFloat(cartItemData.productPrice.replace(/\D/g, '')) * cartItemData.quantity;
+
+        total += subTotal; // Ajoutez le sous-total au total général
+
+        // Créez le bouton "Supprimer" pour chaque article du panier
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Supprimer";
+        removeButton.classList.add("remove-btn");
+
+        removeButton.setAttribute("data-product-name", cartItemData.productName);
+        removeButton.addEventListener("click", (event) => {
+            const productNameToRemove = event.currentTarget.getAttribute("data-product-name");
+
+            // Recherchez l'article correspondant dans le panier
+            const indexToRemove = cart.findIndex((item) => item.productName === productNameToRemove);
+
+            if (indexToRemove !== -1) {
+                // Si l'article est trouvé, supprimez-le du panier
+                cart.splice(indexToRemove, 1);
+
+                // Mettez à jour l'affichage du panier et le total
+                updateCartDisplay();
+            }
+        });
+
+        cartItem.appendChild(removeButton);
+        cartItemsContainer.appendChild(cartItem);
+    });
+
+    // Affichez le total dans l'élément HTML correspondant
+    const cartTotalElement = document.getElementById("cartTotal");
+    cartTotalElement.textContent = `Total: ${total.toFixed(2)} DZD`;
+
+    // Vérifiez si le panier est vide
+    if (cart.length === 0) {
+        cartContainer.style.display = "none";
+        const cartEmptyMessage = document.getElementById("cartEmptyMessage");
+        cartEmptyMessage.classList.remove("hidden");
+    }
+}
+});
+
+    </script>
+  </body>
+</html>
+
+
+      

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.1.0/math.js"></script>
+  </head>
+  <body>
+    <div class="calculator">
+      <span class="logo">Casio</span>
+      <span class="model">fx-82MS</span>
+      <span class="svpam">S-V.P.A.M.</span>
+
+      <div class="screen">
+        <div class="input"></div>
+        <div class="main-display"></div>
+      </div>
+
+      <div class="modifiers">
+        <button class="shift center-shift" tabindex="1"></button>
+        <button class="alpha center-alpha" tabindex="2"></button>
+        <button class="on center-shift" tabindex="4"></button>
+        <button class="mode" tabindex="3"></button>
+      </div>
+
+      <div class="replay">Replay</div>
+      <table class="function-keys">
+        <tr>
+          <td>
+            <button class="reciprocal center-shift">
+              x<span class="sup">-1</span>
+            </button>
+          </td>
+          <td><button class="combin center-shift">nCr</button></td>
+          <td></td>
+          <td></td>
+          <td><button class="pol">Pol(</button></td>
+          <td>
+            <button class="cube center-shift operation-btn">
+              x<span class="sup">3</span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="frac center-shift">
+              a<span class="sup">b</span>/<span class="xxs">c</span>
+            </button>
+          </td>
+          <td><button class="operation-btn">&radic;</button></td>
+          <td>
+            <button class="square operation-btn">
+              x<span class="sup">2</span>
+            </button>
+          </td>
+          <td><button class="pow center-shift operation-btn">^</button></td>
+          <td><button class="log center-shift operation-btn">log</button></td>
+          <td><button class="ln operation-btn">ln</button></td>
+        </tr>
+        <tr>
+          <td><button class="minus operation-btn">(&minus;)</button></td>
+          <td>
+            <button class="deg operation-btn">&deg;&prime;&Prime;</button>
+          </td>
+          <td><button class="hyp operation-btn">hyp</button></td>
+          <td><button class="sin operation-btn">sin</button></td>
+          <td><button class="cos operation-btn">cos</button></td>
+          <td><button class="tan operation-btn">tan</button></td>
+        </tr>
+        <tr>
+          <td><button class="rcl center-shift">RCL</button></td>
+          <td><button class="eng center-shift">ENG</button></td>
+          <td><button class="open-paren number-btn">(</button></td>
+          <td><button class="close-paren number-btn">)</button></td>
+          <td><button class="comma operation-btn">,</button></td>
+          <td><button class="mem-plus operation-btn">M+</button></td>
+        </tr>
+      </table>
+
+      <table class="basic-keys">
+        <tr>
+          <td>
+            <button class="number-btn">7</button>
+          </td>
+          <td>
+            <button class="number-btn">8</button>
+          </td>
+          <td>
+            <button class="number-btn">9</button>
+          </td>
+          <td>
+            <button class="pink del-btn center-shift">DEL</button>
+          </td>
+          <td>
+            <button class="pink all-clear-btn center-shift">AC</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="number-btn">4</button>
+          </td>
+          <td>
+            <button class="number-btn">5</button>
+          </td>
+          <td>
+            <button class="number-btn">6</button>
+          </td>
+          <td>
+            <button class="operation-btn">x</button>
+          </td>
+          <td>
+            <button class="operation-btn">&divide;</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="one center-shift number-btn">1</button>
+          </td>
+          <td>
+            <button class="two center-shift number-btn">2</button>
+          </td>
+          <td>
+            <button class="number-btn">3</button>
+          </td>
+          <td>
+            <button class="operation-btn">+</button>
+          </td>
+          <td>
+            <button class="operation-btn">-</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="zero center-shift number-btn">0</button>
+          </td>
+          <td><button class="period center-shift number-btn">.</button></td>
+          <td><button class="exp center-shift">EXP</button></td>
+          <td><button class="ans center-shift">Ans</button></td>
+          <td><button class="equals-btn center-shift">=</button></td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      const screenInput = document.querySelector(".input");
+      const mainDisplay = document.querySelector(".main-display");
+      const numberButtons = document.querySelectorAll(".number-btn");
+      const operationButtons = document.querySelectorAll(".operation-btn");
+      const equalsButton = document.querySelector(".equals-btn");
+      const clearButton = document.querySelector(".all-clear-btn");
+      const delButton = document.querySelector(".del-btn");
+
+      const operatorMappings = {
+        x: "*",
+        "÷": "/",
+        "+": "+",
+        "-": "-",
+      };
+
+      function addToInput(value) {
+        if (value in operatorMappings) {
+          screenInput.textContent += ` ${value} `;
+        } else {
+          screenInput.textContent += value;
+        }
+      }
+
+      numberButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          addToInput(button.textContent);
+        });
+      });
+
+      operationButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          let operator = button.textContent;
+
+          if (operator === "√") {
+            addToInput("sqrt(");
+          } else if (operator === "log") {
+            addToInput("log10(");
+          } else if (operator === "ln") {
+            addToInput("log(");
+          } else {
+            addToInput(` ${operator} `);
+          }
+        });
+      });
+
+      function safeEval(expression) {
+        try {
+          const parsedExpression = math.parse(expression);
+          const compiled = parsedExpression.compile();
+          const result = compiled.evaluate();
+          return result;
+        } catch (error) {
+          throw error;
+        }
+      }
+
+      equalsButton.addEventListener("click", () => {
+        try {
+          const expression = screenInput.textContent.replace(
+            /([^\d.])(x|÷|[-+])/g,
+            (match, p1, p2) => {
+              return p1 + operatorMappings[p2];
+            }
+          );
+          //   const result = eval(expression);
+          const result = safeEval(expression);
+          mainDisplay.textContent = result;
+          console.log(result);
+        } catch (error) {
+          mainDisplay.textContent = "Erreur";
+          console.error("Erreur :", error);
+        }
+      });
+
+      delButton.addEventListener("click", () => {
+        screenInput.textContent = screenInput.textContent.slice(0, -1);
+      });
+
+      clearButton.addEventListener("click", () => {
+        screenInput.textContent = "";
+        mainDisplay.textContent = "";
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="shortcut icon"
+      href="https://images.contentstack.io/v3/assets/bltc05b5aa7ae1c3a47/blt99f9e2c805e4bc9c/5f8e41791252ff30caf63269/Aspire_Corporate_Card.png"
+      type="image/x-icon"
+    />
+    <title>Money Distributor</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ATM</h1>
+      <div class="card-container">
+        <img
+          class="aspire-card-img"
+          src="https://images.contentstack.io/v3/assets/bltc05b5aa7ae1c3a47/blt99f9e2c805e4bc9c/5f8e41791252ff30caf63269/Aspire_Corporate_Card.png"
+          alt=""
+        />
+        <div class="information-card">
+          <label for="cardNumber"></label>
+          <input
+            class="input-div enterNumeric"
+            type="text"
+            id="cardNumber"
+            name="cardNumber"
+            placeholder="Card Number"
+            onkeypress="return isNumeric(event)"
+            oninput="validateCardNumberInput(this)"
+          />
+
+          <label for="expirationDate"></label>
+          <input
+            class="input-div"
+            type="text"
+            id="expirationDate"
+            name="expirationDate"
+            placeholder="Date Experation"
+            oninput="validateDateInput(this)"
+            onkeypress="return isNumeric(event)"
+          />
+
+          <label for="cvv enterNumeric"></label>
+          <input
+            class="input-div enterNumeric"
+            type="text"
+            id="cvv"
+            name="cvv"
+            placeholder="CVV"
+            onkeypress="return isNumeric(event)"
+            oninput="validateCcvInput(this)"
+          />
+        </div>
+      </div>
+      <div class="result-container">
+        <label for="amount-enter"></label>
+        <input
+          class="amount-enter-div result-padding enterNumeric"
+          type="text"
+          id="amountEnter"
+          name="amountEnter"
+          placeholder="Amount to Withdraw"
+          onkeypress="return isNumeric(event)"
+        />
+        <button class="buttonGet result-padding" onclick="appendMoneySplit()">
+          Get My Money!
+        </button>
+      </div>
+
+      <div class="list-money"></div>
+    </div>
+
+    <script>
+      function isNumeric(event) {
+        return /\d/.test(event.key);
+      }
+
+      const cardNumber = document.getElementById("cardNumber");
+      const cvv = document.getElementById("cvv");
+
+      function validateCardNumberInput(input) {
+        const value = input.value.replace(/\D/g, "");
+
+        if (value.length !== 14) {
+          input.classList.add("error");
+        } else {
+          input.classList.remove("error");
+        }
+      }
+
+      function validateCcvInput(input) {
+        const value = input.value.replace(/\D/g, "");
+
+        if (value.length !== 3) {
+          input.classList.add("error");
+        } else {
+          input.classList.remove("error");
+        }
+      }
+
+      function validateDateInput(input) {
+        const value = input.value.replace(/\D/g, "");
+        const month = value.slice(0, 2);
+        const year = value.slice(2, 4);
+
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear() % 100;
+        const currentMonth = currentDate.getMonth() + 1;
+
+        const isValidYear = year >= currentYear;
+        const isValidMonth = month >= 1 && month <= 12;
+        const isFutureDate =
+          isValidYear && (year > currentYear || month >= currentMonth);
+
+        if (
+          value.length !== 4 ||
+          !isValidMonth ||
+          !isValidYear ||
+          !isFutureDate
+        ) {
+          input.classList.add("error");
+        } else {
+          input.classList.remove("error");
+        }
+
+        if (value.length > 0) {
+          input.value = `${month}/${year}`;
+        }
+      }
+      const expirationDate = document.getElementById("expirationDate");
+
+      const inputsMoneyValue =
+        document.getElementsByClassName("amount-enter-div");
+      const MoneyValue = inputs[0];
+
+      const liste = document.getElementById("liste");
+
+      function appendMoneySplit() {
+        const MoneyValue = document.getElementById("amountEnter");
+        const amount = parseInt(MoneyValue.value);
+        if (isNaN(amount) || amount <= 0) {
+          alert("Please enter a valid positive amount.");
+          return;
+        }
+
+        const newContainer = document.createElement("div");
+        newContainer.className = "listElementContainer";
+
+        const numberOfBills500 = Math.floor(amount / 500);
+        const numberOfBills200 = Math.floor((amount % 500) / 200);
+        const numberOfBills100 = Math.floor((amount % 200) / 100);
+        const numberOfBills10 = Math.floor((amount % 100) / 10);
+        const numberOfBills5 = Math.floor((amount % 100) / 5);
+        const numberOfBills1 = Math.floor((amount % 100) / 1);
+
+        const messages = [
+          `You Got: ${numberOfBills500} Bills of 500$`,
+          `You Got: ${numberOfBills200} Bills of 200$`,
+          `You Got: ${numberOfBills100} Bills of 100$`,
+          `You Got: ${numberOfBills10} Bills of 10$`,
+          `You Got: ${numberOfBills5} Bills of 5$`,
+          `You Got: ${numberOfBills1} Bills of 1$`,
+        ];
+
+        messages.forEach((messageText) => {
+          const messageDiv = document.createElement("div");
+          messageDiv.className = "message bills-padding";
+          messageDiv.innerText = messageText;
+          newContainer.appendChild(messageDiv);
+        });
+
+        const liste = document.querySelector(".list-money");
+        liste.appendChild(newContainer);
+      }
+    </script>
+  </body>
+</html>
