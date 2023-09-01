@@ -145,148 +145,153 @@
       </div>
       <script>
         document.addEventListener("DOMContentLoaded", () => {
-    // Déclaration du tableau cart en dehors de la boucle
-    const cart = [];
-
-    const modal = document.getElementById("modal");
-    const closeBtn = document.getElementById("closeBtn");
-    const addToCartModalBtn = document.getElementById("addToCartModal");
-    const quantityInput = document.getElementById("quantityInput");
-    const modalProductImage = document.getElementById("modalProductImage");
-    const modalProductName = document.getElementById("modalProductName");
-    const modalProductPrice = document.getElementById("modalProductPrice");
-    const modalContent = document.querySelector(".modal-content");
-    const chooseQuantityLabel = document.getElementById("chooseQuantityLabel");
-    const cartItemsContainer = document.querySelector(".cart-items");
-    const cartContainer = document.querySelector(".cart-container");
-    const closeCartBtn = document.getElementById("closeCartBtn");
-    const shoppingCartBtn = document.querySelector(".shopping-cart-btn");
-    const addCartButtons = document.querySelectorAll(".add-cart-btn");
-
-    closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-
-    closeCartBtn.addEventListener("click", () => {
-        cartContainer.style.display = "none";
-    });
-
-    shoppingCartBtn.addEventListener("click", () => {
-        cartContainer.style.display = "flex";
-        cartContainer.style.justifyContent = "center";
-        cartContainer.style.backgroundColor = "#0096C9";
-        cartContainer.style.margin = "-500px 400px 500px 500px";
-        cartContainer.style.padding = "20px 0px 0px 0px";
-        cartItemsContainer.classList.toggle("hidden");
-    });
-
-    addCartButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        const productName = button.parentElement.querySelector(".product-name").textContent;
-        const productPrice = button.parentElement.querySelector(".product-price").textContent;
-        const productImage = button.parentElement.querySelector(".product-image").src;
-
-        modalProductImage.src = productImage;
-        modalProductName.textContent = productName;
-        modalProductPrice.textContent = productPrice;
-
-        modal.style.display = "block";
-        modal.style.margin = "-1000px 0px 30px 300px";
-        modalContent.style.backgroundColor = "#0096C9";
-        modal.style.padding = "300px";
-        modalContent.style.display = "flex";
-        modalContent.style.flexDirection = "column";
-        modalContent.style.alignItems = "center";
-        modalContent.style.padding = "30px";
-
+        // Declare the cart array outside the loop
+        const cart = [];
         
+        // Get references to HTML elements
+        const modal = document.getElementById("modal");
+        const closeBtn = document.getElementById("closeBtn");
+        const addToCartModalBtn = document.getElementById("addToCartModal");
+        const quantityInput = document.getElementById("quantityInput");
+        const modalProductImage = document.getElementById("modalProductImage");
+        const modalProductName = document.getElementById("modalProductName");
+        const modalProductPrice = document.getElementById("modalProductPrice");
+        const modalContent = document.querySelector(".modal-content");
+        const chooseQuantityLabel = document.getElementById("chooseQuantityLabel");
+        const cartItemsContainer = document.querySelector(".cart-items");
+        const cartContainer = document.querySelector(".cart-container");
+        const closeCartBtn = document.getElementById("closeCartBtn");
+        const shoppingCartBtn = document.querySelector(".shopping-cart-btn");
+        const addCartButtons = document.querySelectorAll(".add-cart-btn");
 
-        addToCartModalBtn.addEventListener("click", () => {
-            const quantity = quantityInput.value;
-
-            // Vérifiez si l'article est déjà dans le panier
-            const existingCartItem = cart.find((item) => item.productName === productName);
-
-            if (existingCartItem) {
-                // Si l'article existe, mettez à jour la quantité
-                existingCartItem.quantity = parseInt(existingCartItem.quantity) + parseInt(quantity);
-            } else {
-                // Sinon, ajoutez une nouvelle entrée au panier
-                const cartItemData = {
-                    productName: productName,
-                    productPrice: productPrice,
-                    productImage: productImage,
-                    quantity: quantity,
-                };
-                cart.push(cartItemData);
-            }
-
-            // Mettez à jour l'affichage du panier
-            updateCartDisplay();
-
+        // Event listener for closing the modal
+        closeBtn.addEventListener("click", () => {
             modal.style.display = "none";
         });
-    });
-});
 
-function updateCartDisplay() {
-    cartItemsContainer.innerHTML = ""; // Effacez le contenu actuel du panier
-
-    let total = 0; // Initialisez la variable du total à zéro
-
-    cart.forEach((cartItemData) => {
-        const cartItem = document.createElement("div");
-        cartItem.classList.add("cart-item");
-        cartItem.innerHTML = `
-            <img src="${cartItemData.productImage}" alt="${cartItemData.productName}" />
-            <div class="cart-item-details">
-                <h3>${cartItemData.productName}</h3>
-                <p>${cartItemData.productPrice}</p>
-                <p>Quantity: ${cartItemData.quantity}</p>
-            </div>
-        `;
-
-        // Calculez le sous-total pour chaque article du panier
-        const subTotal = parseFloat(cartItemData.productPrice.replace(/\D/g, '')) * cartItemData.quantity;
-
-        total += subTotal; // Ajoutez le sous-total au total général
-
-        // Créez le bouton "Supprimer" pour chaque article du panier
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Supprimer";
-        removeButton.classList.add("remove-btn");
-
-        removeButton.setAttribute("data-product-name", cartItemData.productName);
-        removeButton.addEventListener("click", (event) => {
-            const productNameToRemove = event.currentTarget.getAttribute("data-product-name");
-
-            // Recherchez l'article correspondant dans le panier
-            const indexToRemove = cart.findIndex((item) => item.productName === productNameToRemove);
-
-            if (indexToRemove !== -1) {
-                // Si l'article est trouvé, supprimez-le du panier
-                cart.splice(indexToRemove, 1);
-
-                // Mettez à jour l'affichage du panier et le total
-                updateCartDisplay();
-            }
+        // Event listener for closing the cart
+        closeCartBtn.addEventListener("click", () => {
+            cartContainer.style.display = "none";
         });
 
-        cartItem.appendChild(removeButton);
-        cartItemsContainer.appendChild(cartItem);
+        // Event listener for opening the cart
+        shoppingCartBtn.addEventListener("click", () => {
+            cartContainer.style.display = "flex";
+            cartContainer.style.justifyContent = "center";
+            cartContainer.style.backgroundColor = "#0096C9";
+            cartContainer.style.margin = "-500px 400px 500px 500px";
+            cartContainer.style.padding = "20px 0px 0px 0px";
+            cartItemsContainer.classList.toggle("hidden");
+        });
+
+        // Event listener for adding items to the cart
+        addCartButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const productName = button.parentElement.querySelector(".product-name").textContent;
+            const productPrice = button.parentElement.querySelector(".product-price").textContent;
+            const productImage = button.parentElement.querySelector(".product-image").src;
+
+            // Update modal content with selected product information
+            modalProductImage.src = productImage;
+            modalProductName.textContent = productName;
+            modalProductPrice.textContent = productPrice;
+
+            // Display the modal
+            modal.style.display = "block";
+            modal.style.margin = "-1000px 0px 30px 300px";
+            modalContent.style.backgroundColor = "#0096C9";
+            modal.style.padding = "300px";
+            modalContent.style.display = "flex";
+            modalContent.style.flexDirection = "column";
+            modalContent.style.alignItems = "center";
+            modalContent.style.padding = "30px";
+
+            // Event listener for confirming the quantity and adding to the cart
+            addToCartModalBtn.addEventListener("click", () => {
+                const quantity = quantityInput.value;
+                
+                const existingCartItem = cart.find((item) => item.productName === productName); // Check if the item is already in the cart
+
+                if (existingCartItem) {
+                    // If the item exists, update the quantity
+                    existingCartItem.quantity = parseInt(existingCartItem.quantity) + parseInt(quantity);
+                } else {
+                    // Otherwise, add a new entry to the cart
+                    const cartItemData = {
+                        productName: productName,
+                        productPrice: productPrice,
+                        productImage: productImage,
+                        quantity: quantity,
+                    };
+                    cart.push(cartItemData);
+                }
+
+                // Update the cart display
+                updateCartDisplay();
+                modal.style.display = "none"; // Close the modal
+            });
+        });
     });
 
-    // Affichez le total dans l'élément HTML correspondant
-    const cartTotalElement = document.getElementById("cartTotal");
-    cartTotalElement.textContent = `Total: ${total.toFixed(2)} DZD`;
+    // Function to update the cart display
+    function updateCartDisplay() {
+        cartItemsContainer.innerHTML = ""; // Clear the current cart content
+        let total = 0; // Initialize the total variable to zero
 
-    // Vérifiez si le panier est vide
-    if (cart.length === 0) {
-        cartContainer.style.display = "none";
-        const cartEmptyMessage = document.getElementById("cartEmptyMessage");
-        cartEmptyMessage.classList.remove("hidden");
+        // Iterate through each item in the cart
+        cart.forEach((cartItemData) => {
+            const cartItem = document.createElement("div");
+            cartItem.classList.add("cart-item");
+            cartItem.innerHTML = `
+                <img src="${cartItemData.productImage}" alt="${cartItemData.productName}" />
+                <div class="cart-item-details">
+                    <h3>${cartItemData.productName}</h3>
+                    <p>${cartItemData.productPrice}</p>
+                    <p>Quantity: ${cartItemData.quantity}</p>
+                </div>
+            `;
+
+            const subTotal = parseFloat(cartItemData.productPrice.replace(/\D/g, '')) * cartItemData.quantity; // Calculate the subtotal for each item in the cart
+
+            total += subTotal; // Add the subtotal to the total
+
+            // Create a "Remove" button for each cart item
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Supprimer";
+            removeButton.classList.add("remove-btn");
+
+            removeButton.setAttribute("data-product-name", cartItemData.productName); // Set a data attribute with the product name for removal
+
+            // Event listener for removing an item from the cart
+            removeButton.addEventListener("click", (event) => {
+                const productNameToRemove = event.currentTarget.getAttribute("data-product-name");
+                
+                const indexToRemove = cart.findIndex((item) => item.productName === productNameToRemove); // Find the index of the corresponding item in the cart
+
+                if (indexToRemove !== -1) {
+                    // If the item is found, remove it from the cart
+                    cart.splice(indexToRemove, 1);
+
+                    // Update the cart display and total
+                    updateCartDisplay();
+                }
+            });
+
+            cartItem.appendChild(removeButton); // Append the remove button to the cart item
+            cartItemsContainer.appendChild(cartItem); // Append the cart item to the cart container
+        });
+
+        // Display the total in the corresponding HTML element
+        const cartTotalElement = document.getElementById("cartTotal");
+        cartTotalElement.textContent = `Total: ${total.toFixed(2)} DZD`;
+
+        // Check if the cart is empty and hide it accordingly
+        if (cart.length === 0) {
+            cartContainer.style.display = "none";
+            const cartEmptyMessage = document.getElementById("cartEmptyMessage");
+            cartEmptyMessage.classList.remove("hidden");
+        }
     }
-}
 });
 
     </script>
