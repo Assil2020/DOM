@@ -179,8 +179,8 @@
             cartContainer.style.display = "flex";
             cartContainer.style.justifyContent = "center";
             cartContainer.style.backgroundColor = "#0096C9";
-            cartContainer.style.margin = "-500px 400px 500px 500px";
-            cartContainer.style.padding = "20px 0px 0px 0px";
+            cartContainer.style.margin = " -700px 400px 500px 400px";
+            cartContainer.style.padding = "20px 0px 0px 20px";
             cartItemsContainer.classList.toggle("hidden");
         });
 
@@ -198,7 +198,7 @@
 
             // Display the modal
             modal.style.display = "block";
-            modal.style.margin = "-1000px 0px 30px 300px";
+            modal.style.margin = "-1000px 0px 30px 80px";
             modalContent.style.backgroundColor = "#0096C9";
             modal.style.padding = "300px";
             modalContent.style.display = "flex";
@@ -257,7 +257,7 @@
 
             // Create a "Remove" button for each cart item
             const removeButton = document.createElement("button");
-            removeButton.textContent = "Supprimer";
+            removeButton.textContent = "Remove";
             removeButton.classList.add("remove-btn");
 
             removeButton.setAttribute("data-product-name", cartItemData.productName); // Set a data attribute with the product name for removal
@@ -283,7 +283,7 @@
 
         // Display the total in the corresponding HTML element
         const cartTotalElement = document.getElementById("cartTotal");
-        cartTotalElement.textContent = `Total: ${total.toFixed(2)} DZD`;
+        cartTotalElement.textContent = `Total: ${total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')} DZD`;
 
         // Check if the cart is empty and hide it accordingly
         if (cart.length === 0) {
